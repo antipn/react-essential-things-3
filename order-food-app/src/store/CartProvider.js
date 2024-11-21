@@ -9,10 +9,41 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
     if (action.type === 'ADD_ITEM') {
-        const updatedItems = state.items.concat(action.item);
+
+
         const updatedTotalAmount = state.totalAmount + action.item.amount * action.item.price
+
+
+        //вернет индекс элемента если он уже есть в массиве в корзине товаров
+        const existingCartItemsIndex = state.items.findIndex((item) =>  //true of false
+            item.id === action.item.id
+        )
+
+
+
+        //получаем товар который уже лежит в корзине а мы хотим добавить такой же => значит обновим его кол-во вместо добавления
+        const existingCartItem = state.items[existingCartItemsIndex];
+        let updatedCartItems;
+
+        //товар уже лежит в корзине с каким-то количеством - мы его обновим
+        if (existingCartItem) {
+            console.log('Товар уже есть в корзине с индексом = ' + existingCartItemsIndex)
+            const updatedCartItem = {
+                ...existingCartItem,
+                amount: existingCartItem.amount + action.item.amount
+            }
+
+            //updatedCartItems = [...state.items, updatedCartItem] // так в конец добавится новый и будет задвоение!
+            updatedCartItems = [...state.items]
+            updatedCartItems[existingCartItemsIndex] = updatedCartItem;//нужно через индекс заменить объект
+        } else {
+            console.log('Товар не было в корзине')
+            updatedCartItems = state.items.concat(action.item);
+        }
+
+
         return ({
-            items: updatedItems,
+            items: updatedCartItems,
             totalAmount: updatedTotalAmount
         })
     }
