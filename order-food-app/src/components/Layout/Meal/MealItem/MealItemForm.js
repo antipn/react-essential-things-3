@@ -21,9 +21,11 @@ const MealItemForm = (props) => {
         if (enteredAmount.trim().length === 0 || enteredAmountNumber < 1 || enteredAmountNumber > 10) {
             setAmountIsValid(false);
             return //small validation and returning nothing from submitHandler
+        } else { //когда пользователь исправился мы уберем ошибку
+            setAmountIsValid(true);
         }
 
-        props.onAddToCart(enteredAmountNumber) //у нас в этом элементе нет инфомрации о товаре только о количестве (no id here!)
+        props.onAddToCart(enteredAmountNumber) //у нас в этом элементе нет информации о товаре только о количестве (no id here!)
 
     }
 
