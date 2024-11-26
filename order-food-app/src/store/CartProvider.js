@@ -17,7 +17,7 @@ const cartReducer = (state, action) => {
         //получаем товар который уже лежит в корзине а мы хотим добавить такой же => значит обновим его кол-во вместо добавления
         const existingCartItem = state.items[existingCartItemsIndex];
         let updatedCartItems; //
-        //если товар уже лежит в корзине => значит его нужно не добавить а обновить его кол-во
+        //если товар уже лежит в корзине => значит его нужно не добавить, а обновить его кол-во
         if (existingCartItem) {
             console.log('Товар уже есть в корзине с индексом = ' + existingCartItemsIndex)
             const updatedCartItem = {
@@ -37,9 +37,9 @@ const cartReducer = (state, action) => {
         })
     }
     if (action.type === 'REMOVE_ITEM') {
-        // если у нас кол-во товара больше 1 и мы его уменьшаем, то просто уменьшаем кол-во,
-        //если товара 1 то при уменьшении кол-ва мы должны удалить его полностью из корзины
-        //нам приходит id товара для взаимодействия
+        // если у нас кол-во товара больше 1 и мы его уменьшаем, то просто уменьшаем кол-во
+        // если кол-во товара = 1,то при уменьшении кол-ва мы должны удалить его полностью из корзины
+        // нам приходит id товара для взаимодействия
 
         //получаем index массива товара который будем изменять!
         const existingCartItemIndex = state.items.findIndex((item) => item.id === action.id)
@@ -50,11 +50,12 @@ const cartReducer = (state, action) => {
         let updatedCartItem;
 
         //получили все товары что были в корзине
-        let updatedCartItems = [...state.items];
+        let updatedCartItems
 
         // если товаров менье 2 то нужно удалить его из корзины полностью
         if (existingCartItem && existingCartItem.amount > 1) {
             updatedCartItem = {...existingCartItem, amount: existingCartItem.amount - 1}
+            updatedCartItems = [...state.items];
             //заменяем измененный товар
             updatedCartItems[existingCartItemIndex] = updatedCartItem;
         } else {
