@@ -37,7 +37,42 @@ const cartReducer = (state, action) => {
         })
     }
     if (action.type === 'REMOVE_ITEM') {
+        // если у нас кол-во товара больше 1 и мы его уменьшаем, то просто уменьшаем кол-во,
+        //если товара 1 то при уменьшении кол-ва мы должны удалить его полностью из корзины
+        //нам приходит id товара для взаимодействия
 
+        //получаем index массива товара который будем изменять!
+        const existingCartItemIndex = state.items.findIndex((item) => item.id === action.id)
+        //получаем сам товар потому что прилетает только его id и в каком месте он лежит мы определили выше
+        const existingCartItem = state.items[existingCartItemIndex]
+
+        //товар в который положим изменения
+        let updatedCartItem;
+
+        //получили все товары что были в корзине
+        let updatedCartItems = [...state.items];
+
+        // если товаров менье 2 то нужно удалить его из корзины полностью
+        if (existingCartItem && existingCartItem.amount > 1) {
+            updatedCartItem = {...existingCartItem, amount: existingCartItem.amount - 1}
+            //заменяем измененный товар
+            updatedCartItems[existingCartItemIndex] = updatedCartItem;
+        } else {
+            //удаляем товар полностью
+
+            //можно так если переменная определена как let выше везде учат делать через фильтр
+            updatedCartItems = state.items.filter((item) => item.id !== action.id)
+            //еще можно удалить через JS метод splice с какого индекса и сколько
+            //    updatedCartItems.splice(existingCartItemIndex, 1);
+        }
+
+        //уменьшаем переменную общего кол-ва товаров на -1
+        const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+
+        return {
+            items: updatedCartItems,
+            totalAmount: updatedTotalAmount
+        }
     }
     return defaultCartState
 
