@@ -1,3 +1,7 @@
+
+This is small app for adding some good in the cart with a lot features in React: like contex, effects, logic and styling
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
