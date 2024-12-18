@@ -32,7 +32,7 @@ const HeaderCartButton = (props) => {
         }, 300);
 
 
-        //cleanup function
+        //cleanup function this return will be run always automatically we should provide code like this
         return () => {
             clearTimeout(timer)
         };
