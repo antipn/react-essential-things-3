@@ -19,10 +19,20 @@ import MealItem from "./MealItem/MealItem";
 const AvailableMeals = () => {
 
     const [meals, setMeals] = useState([])
-    //не может работать с Promise и соответственно с async await просто с лоб не прокатит
+    const [isLoading, setIsLoading] = useState(true)
+    const [httpError, setHttpError] = useState()
+
+    //не может работать с Promise и соответственно с async await просто в лоб не прокатит
     useEffect(() => {
+        //async возвращает Promise
+        //особенность Firebase что он возвращает не массив данных, а объект который мы должны разложить в массив самостоятельно!
+        //видно при запуске запроса, что возвращается объект, а мы обычно в своих приложениях получаем массивы!
         const fetchMeals = async () => {
             const response = await fetch('https://react-essential-things-3-default-rtdb.europe-west1.firebasedatabase.app/meals.json')
+            if (!response.ok) {
+                //после этого код после ошибки не будет выполниться, как в java
+                throw new Error('Failed to fetch meals')
+            }
             const responseData = await response.json();
             //мы получаем объект, а нужно получить массив
             const loadedMeals = [];
@@ -35,9 +45,28 @@ const AvailableMeals = () => {
                 });
             }
             setMeals(loadedMeals);
+            setIsLoading(false);
         }
-        fetchMeals();
+
+        //классически try catch тут не срабатывает из-за того что у нас Promise ожидается
+        //так как у нас useEffect не может быть async мы не можем тут добавить await, либо делать доп функцию проверки ошибки либо делать так:
+        fetchMeals().catch((error) => {
+            //произошла ошибка и мы уже не загружаем данные
+            setIsLoading(false);
+            setHttpError(error.message)
+
+        });
+
+
     }, []);
+
+    if (isLoading) {
+        return <section className={classes.MealsLoading}><p>Loading...</p></section>
+    }
+
+    if (httpError) {
+        return <section className={classes.MealsError}><p>{httpError}</p></section>
+    }
 
     const mealsList = meals.map(meal => <MealItem key={meal.id}
                                                   id={meal.id}
