@@ -1,65 +1,64 @@
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #8a2b06;
-    padding: 1rem 0;
+.form {
     margin: 1rem 0;
+    height: 10rem;
+    overflow: auto;
 }
 
-.cart-item h2 {
-    margin: 0 0 0.5rem 0;
-    color: #363636;
+.control {
+    margin-bottom: 0.5rem;
 }
 
-.summary {
-    width: 10rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.price {
+.control label {
     font-weight: bold;
-    color: #8a2b06;
+    margin-bottom: 0.25rem;
+    display: block;
 }
 
-.amount {
-    font-weight: bold;
+.control input {
+    font: inherit;
     border: 1px solid #ccc;
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    color: #363636;
+    border-radius: 4px;
+    width: 20rem;
+    max-width: 100%;
 }
 
 .actions {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
 }
 
-@media (min-width: 768px) {
-    .actions {
-        flex-direction: row;
-    }
-}
-
-.cart-item button {
+.actions button {
     font: inherit;
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: #8a2b06;
-    border: 1px solid #8a2b06;
-    width: 3rem;
-    text-align: center;
-    border-radius: 6px;
-    background-color: transparent;
+    color: #5a1a01;
     cursor: pointer;
-    margin-left: 1rem;
-    margin: 0.25rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 2rem;
 }
 
-.cart-item button:hover,
-.cart-item button:active {
-    background-color: #8a2b06;
+.actions button:hover,
+.actions button:active {
+    background-color: #ffe6dc;
+}
+
+.actions .submit {
+    border: 1px solid #5a1a01;
+    background-color: #5a1a01;
     color: white;
+}
+
+.actions .submit:hover,
+.actions .submit:active {
+    background-color: #7a2706;
+}
+
+.invalid label {
+    color: #ca3e51;
+}
+
+.invalid input {
+    border-color: #aa0b20;
+    background-color: #ffeff1;
 }
