@@ -1,6 +1,6 @@
 .form {
     margin: 1rem 0;
-    height: 10rem;
+    height: auto;
     overflow: auto;
 }
 
@@ -61,4 +61,9 @@
 .invalid input {
     border-color: #aa0b20;
     background-color: #ffeff1;
+
+}
+
+.invalid p {
+    color: #7a2706;
 }
