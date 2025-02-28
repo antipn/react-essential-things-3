@@ -75,6 +75,15 @@ const cartReducer = (state, action) => {
             totalAmount: updatedTotalAmount
         }
     }
+
+    if (action.type === 'EMPTY_CART') {
+        // полностью зачищаем корзину
+        return {
+            items: [],
+            totalAmount: 0
+        }
+        //     or just return defaultCartState
+    }
     return defaultCartState
 
 }
@@ -91,11 +100,16 @@ const CartProvider = (props) => {
         dispatchCartAction({type: 'REMOVE_ITEM', id: id})
     }
 
+    const clearCartHandler = () => {
+        dispatchCartAction({type: 'EMPTY_CART'})
+    }
+
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
-        removeItem: removeItemFromCarthandler
+        removeItem: removeItemFromCarthandler,
+        emptyCart: clearCartHandler
     }
 
     return (

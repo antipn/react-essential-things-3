@@ -65,6 +65,12 @@ const Checkout = (props) => {
         }
         //submitting data here
         // console.log("enteredPostalIsValid = ", enteredPostalIsValid);
+        props.onConfirm({
+            name: enteredName,
+            street: enteredStreet,
+            city: enteredCity,
+            postalCode: enteredPostalIsValid
+        })
     }
 
 
